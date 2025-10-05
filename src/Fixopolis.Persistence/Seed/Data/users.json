@@ -1,0 +1,7 @@
+[
+  { "Name": "Admin User", "Email": "admin@fixopolis.com", "Password": "123456", "Role": 0, "IsActive": true },
+  { "Name": "John Doe", "Email": "john@fixopolis.com", "Password": "123456", "Role": 2, "IsActive": true },
+  { "Name": "Maria Lopez", "Email": "maria@fixopolis.com", "Password": "123456", "Role": 2, "IsActive": true },
+  { "Name": "Pedro Martinez", "Email": "pedro@fixopolis.com", "Password": "123456", "Role": 1, "IsActive": true },
+  { "Name": "Laura Sanchez", "Email": "laura@fixopolis.com", "Password": "123456", "Role": 1, "IsActive": true }
+]
