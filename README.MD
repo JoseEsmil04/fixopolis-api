@@ -1,27 +1,33 @@
-# 🏗️ Fixopolis API
+# Fixopolis API
 
+```markdown
 API REST desarrollada en **.NET** con **Clean Architecture**, **Entity Framework Core**, y **SQL Server (Docker)**.  
 Forma parte del proyecto de gestión de ferretería **Fixopolis**, con estructura modular y semilla de datos (seed) inicial.
+```
 
 ---
 
 ## 📂 Estructura del proyecto
 
+```markdown
 src/
 ├── Fixopolis.Domain/ # Entidades del dominio (POCOs)
 ├── Fixopolis.Persistence/ # Contexto EF Core + configuración + Seed
 ├── Fixopolis.Application/ # Comandos, Dtos, Queries y Validaciones
 └── Fixopolis.WebApi/ # API principal (.NET 8 Web API)
+```
 
 ---
 
 ## ⚙️ Tecnologías
 
+```markdown
 - **.NET / C#**
 - **Entity Framework Core**
 - **SQL Server 2022 (Docker)**
 - **Swagger / OpenAPI**
 - **Clean Architecture (Domain–Persistence–WebApi)**
+```
 
 ---
 
@@ -40,11 +46,13 @@ src/
   docker compose up -d
 ```
 
--Usuario: sa
+```markdown
+- Usuario: sa
 
--Contraseña: MyStrongPass123
+- Contraseña: MyStrongPass123
 
--Puerto: 1433
+- Puerto: 1433
+```
 
 3. **Aplicar migraciones**
 
