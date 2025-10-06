@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fixopolis.Domain\Fixopolis.Domain.csproj" />
+    <ProjectReference Include="..\Fixopolis.Application\Fixopolis.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

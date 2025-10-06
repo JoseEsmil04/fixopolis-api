@@ -30,7 +30,6 @@ namespace Fixopolis.Persistence.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Category = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Stock = table.Column<int>(type: "int", nullable: false),
@@ -148,6 +147,12 @@ namespace Fixopolis.Persistence.Migrations
                 name: "IX_product_categories_CategoryId",
                 table: "product_categories",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "UX_products_code",
+                table: "products",
+                column: "Code",
+                unique: true);
         }
 
         /// <inheritdoc />

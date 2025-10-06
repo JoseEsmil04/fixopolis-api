@@ -1,30 +1,46 @@
+using Fixopolis.Application;
+using Fixopolis.Application.Abstractions;
 using Fixopolis.Persistence;
 using Microsoft.EntityFrameworkCore;
+using FluentValidation.AspNetCore;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1️⃣ Add DbContext
-builder.Services.AddDbContext<FixopolisDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddControllers()
+    .AddJsonOptions(o =>
+    {
+        o.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+        o.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+    });
 
-// 2️⃣ Add controllers and swagger
-builder.Services.AddControllers();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
+builder.Services.AddValidatorsFromAssemblyContaining<IAppDbContext>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
+builder.Services.AddApplication();
 
-// 3️⃣ Auto migrate + seed on startup
-using (var scope = app.Services.CreateScope())
+builder.Services.AddDbContext<FixopolisDbContext>(options =>
 {
-    var context = scope.ServiceProvider.GetRequiredService<FixopolisDbContext>();
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
-    // Apply pending migrations
-    await context.Database.MigrateAsync();
+// Vincular IAppDbContext a nuestro DbContext de EF
+builder.Services.AddScoped<IAppDbContext>(sp => sp.GetRequiredService<FixopolisDbContext>());
 
-    // Run the seed
-    await FixopolisDbContextSeed.SeedAsync(context);
-}
+// CORS
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("dev", p => p
+        .AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod());
+});
+
+var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
@@ -32,6 +48,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("dev");
+
 app.UseHttpsRedirection();
+//todo: app.UseAuthentication();
+//todo: app.UseAuthorization();
+
 app.MapControllers();
 app.Run();

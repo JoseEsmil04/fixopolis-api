@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fixopolis.Persistence", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fixopolis.WebApi", "src\Fixopolis.WebApi\Fixopolis.WebApi.csproj", "{A14707D6-53A4-4EA9-8E41-7CC8B08599D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fixopolis.Application", "src\Fixopolis.Application\Fixopolis.Application.csproj", "{DBA39DF2-C2E5-48A5-B52B-71329E7FB8CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,10 +34,15 @@ Global
 		{A14707D6-53A4-4EA9-8E41-7CC8B08599D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A14707D6-53A4-4EA9-8E41-7CC8B08599D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A14707D6-53A4-4EA9-8E41-7CC8B08599D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBA39DF2-C2E5-48A5-B52B-71329E7FB8CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBA39DF2-C2E5-48A5-B52B-71329E7FB8CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBA39DF2-C2E5-48A5-B52B-71329E7FB8CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBA39DF2-C2E5-48A5-B52B-71329E7FB8CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{AE6B4B1E-B574-49DF-B2D8-DF507121D189} = {95E5227F-4FBC-499C-AADD-67F1EFD49C00}
 		{0AD5CF58-8B6B-401D-B7A3-CC59504DF841} = {95E5227F-4FBC-499C-AADD-67F1EFD49C00}
 		{A14707D6-53A4-4EA9-8E41-7CC8B08599D3} = {95E5227F-4FBC-499C-AADD-67F1EFD49C00}
+		{DBA39DF2-C2E5-48A5-B52B-71329E7FB8CC} = {95E5227F-4FBC-499C-AADD-67F1EFD49C00}
 	EndGlobalSection
 EndGlobal

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fixopolis.Persistence.Migrations
 {
     [DbContext(typeof(FixopolisDbContext))]
-    [Migration("20251005172717_InitialCreate")]
+    [Migration("20251006000844_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -102,9 +102,6 @@ namespace Fixopolis.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Category")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -129,6 +126,10 @@ namespace Fixopolis.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique()
+                        .HasDatabaseName("UX_products_code");
 
                     b.ToTable("products", (string)null);
                 });

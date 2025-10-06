@@ -1,6 +1,6 @@
 # 🏗️ Fixopolis API
 
-API REST desarrollada en **.NET 8** con **Clean Architecture**, **Entity Framework Core**, y **SQL Server (Docker)**.  
+API REST desarrollada en **.NET** con **Clean Architecture**, **Entity Framework Core**, y **SQL Server (Docker)**.  
 Forma parte del proyecto de gestión de ferretería **Fixopolis**, con estructura modular y semilla de datos (seed) inicial.
 
 ---
@@ -10,13 +10,14 @@ Forma parte del proyecto de gestión de ferretería **Fixopolis**, con estructur
 src/
 ├── Fixopolis.Domain/ # Entidades del dominio (POCOs)
 ├── Fixopolis.Persistence/ # Contexto EF Core + configuración + Seed
+├── Fixopolis.Application/ # Comandos, Dtos, Queries y Validaciones
 └── Fixopolis.WebApi/ # API principal (.NET 8 Web API)
 
 ---
 
 ## ⚙️ Tecnologías
 
-- **.NET 8 / C#**
+- **.NET / C#**
 - **Entity Framework Core**
 - **SQL Server 2022 (Docker)**
 - **Swagger / OpenAPI**
@@ -58,4 +59,4 @@ dotnet run --project src/Fixopolis.WebApi
 ```
 
 5. **Probar en Swagger**
-   👉 https://localhost:5001/swagger
+   👉 https://localhost:(tu_puerto)/swagger/index.html

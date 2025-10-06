@@ -1,11 +1,11 @@
 ﻿using Fixopolis.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Fixopolis.Application.Abstractions;
 
 namespace Fixopolis.Persistence;
 
 
-public class FixopolisDbContext : DbContext
+public class FixopolisDbContext : DbContext, IAppDbContext
 {
     public FixopolisDbContext(DbContextOptions<FixopolisDbContext> options) : base(options)
     { }
@@ -22,7 +22,6 @@ public class FixopolisDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(FixopolisDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
 
-        // User
         modelBuilder.Entity<User>(entity =>
         {
             entity.ToTable("users");
@@ -46,7 +45,6 @@ public class FixopolisDbContext : DbContext
                 .HasForeignKey(o => o.UserId);
         });
 
-        // ==== PRODUCT ====
         modelBuilder.Entity<Product>(entity =>
         {
             entity.ToTable("products");
@@ -63,13 +61,16 @@ public class FixopolisDbContext : DbContext
             entity.Property(p => p.Price)
                 .HasPrecision(18, 2);
 
+            entity.HasIndex(p => p.Code)
+                .IsUnique()
+                .HasDatabaseName("UX_products_code");
+
             // 1:N Product -> OrderItems
             entity.HasMany(p => p.OrderItems)
                 .WithOne(oi => oi.Product)
                 .HasForeignKey(oi => oi.ProductId);
         });
 
-        // ==== CATEGORY ====
         modelBuilder.Entity<Category>(entity =>
         {
             entity.ToTable("categories");
@@ -80,7 +81,6 @@ public class FixopolisDbContext : DbContext
                 .HasMaxLength(100);
         });
 
-        // ==== PRODUCT-CATEGORY (N:N) ====
         modelBuilder.Entity<ProductCategory>(entity =>
         {
             entity.ToTable("product_categories");
@@ -95,8 +95,6 @@ public class FixopolisDbContext : DbContext
                 .HasForeignKey(pc => pc.CategoryId);
         });
 
-
-        // ==== ORDER ====
         modelBuilder.Entity<Order>(entity =>
         {
             entity.ToTable("orders");
@@ -111,8 +109,6 @@ public class FixopolisDbContext : DbContext
                 .HasForeignKey(i => i.OrderId);
         });
 
-
-        // ==== ORDER ITEM ====
         modelBuilder.Entity<OrderItem>(entity =>
         {
             entity.ToTable("order_items");

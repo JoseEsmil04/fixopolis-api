@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.*" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.9">
@@ -16,10 +17,15 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.9" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
   </ItemGroup>
-
+  <ItemGroup>
+    <Content Include="..\Fixopolis.Persistence\Seed\Data\*.json" Link="Seed\Data\%(Filename)%(Extension)">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fixopolis.Domain\Fixopolis.Domain.csproj" />
     <ProjectReference Include="..\Fixopolis.Persistence\Fixopolis.Persistence.csproj" />
+    <ProjectReference Include="..\Fixopolis.Application\Fixopolis.Application.csproj" />
   </ItemGroup>
 
 </Project>

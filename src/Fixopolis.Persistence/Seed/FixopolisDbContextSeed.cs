@@ -20,15 +20,13 @@ public static class FixopolisDbContextSeed
             }) ?? new();
         }
 
-        // 1️⃣ USERS
         if (!context.Users.Any())
         {
             var users = await LoadJsonAsync<User>("users.json");
             await context.Users.AddRangeAsync(users);
-            await context.SaveChangesAsync(); // 🔥 Guarda primero los usuarios
+            await context.SaveChangesAsync(); // Guarda primero los usuarios
         }
 
-        // 2️⃣ CATEGORIES
         if (!context.Categories.Any())
         {
             var categories = await LoadJsonAsync<Category>("categories.json");
@@ -36,7 +34,6 @@ public static class FixopolisDbContextSeed
             await context.SaveChangesAsync();
         }
 
-        // 3️⃣ PRODUCTS
         if (!context.Products.Any())
         {
             var products = await LoadJsonAsync<Product>("products.json");
@@ -44,10 +41,9 @@ public static class FixopolisDbContextSeed
             await context.SaveChangesAsync();
         }
 
-        // 4️⃣ ORDERS (crear manualmente con usuarios reales)
         if (!context.Orders.Any())
         {
-            var userIds = context.Users.Select(u => u.Id).ToList();
+            var userIds = context.Users.Select(u => u.Id).ToList(); // Buscar usuarios existentes
 
             var orders = new List<Order>
             {
@@ -64,7 +60,6 @@ public static class FixopolisDbContextSeed
             Console.WriteLine($"✅ Inserted {orders.Count} Orders");
         }
 
-        // 5️⃣ ORDER ITEMS (relaciones reales con Orders y Products)
         if (!context.OrderItems.Any())
         {
             var orderIds = context.Orders.Select(o => o.Id).ToList();
@@ -85,7 +80,6 @@ public static class FixopolisDbContextSeed
             Console.WriteLine($"✅ Inserted {items.Count} OrderItems");
         }
 
-        // 6️⃣ PRODUCT–CATEGORY (crear relaciones reales)
         if (!context.ProductCategories.Any())
         {
             var productIds = context.Products.Select(p => p.Id).ToList();
@@ -105,8 +99,5 @@ public static class FixopolisDbContextSeed
 
             Console.WriteLine($"✅ Inserted {productCategories.Count} ProductCategories");
         }
-
-
-        Console.WriteLine("✅ Seed completed successfully!");
     }
 }
