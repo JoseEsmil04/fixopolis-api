@@ -23,26 +23,53 @@ public sealed class ProductsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateProductCommand cmd)
+    public async Task<IActionResult> Create([FromBody] CreateProductCommand createProductCommand)
     {
         try
         {
-            var id = await mediator.Send(cmd);
+            var id = await mediator.Send(createProductCommand);
             return CreatedAtAction(nameof(GetById), new { id }, null);
         }
         catch (DbUpdateException ex) when (ex.InnerException is SqlException sql && (sql.Number == 2601 || sql.Number == 2627))
         {
-            return Conflict(new { message = "El código de producto ya está en uso." }); // 409
+            return Conflict(new { message = "El código de producto ya está en uso." });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict(new { message = ex.Message });
         }
     }
 
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProductCommand updateProductCommand)
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProductCommand body)
     {
-        if (id != updateProductCommand.Id) return BadRequest("El id de la ruta no coincide con el del cuerpo.");
-        var ok = await mediator.Send(updateProductCommand);
-        return ok ? NoContent() : NotFound();
+        try
+        {
+            var command = new UpdateProductCommand(
+                id,
+                body.Name,
+                body.Code,
+                body.Description,
+                body.Price,
+                body.Stock,
+                body.IsAvailable,
+                body.CategoryIds
+            );
+
+            var ok = await mediator.Send(command);
+            return ok ? NoContent() : NotFound();
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sql && (sql.Number == 2601 || sql.Number == 2627))
+        {
+            return Conflict(new { message = "El código de producto ya está en uso." });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
     }
+
+
 
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)

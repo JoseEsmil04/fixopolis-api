@@ -27,4 +27,6 @@ public sealed class CreateProductValidator : AbstractValidator<CreateProductComm
 
     private bool BeUniqueCode(string code)
         => !_db.Products.Any(p => p.Code == code); // <-- Sincrono
+
+
 }

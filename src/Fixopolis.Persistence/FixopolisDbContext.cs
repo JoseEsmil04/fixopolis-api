@@ -79,6 +79,10 @@ public class FixopolisDbContext : DbContext, IAppDbContext
             entity.Property(c => c.Name)
                 .IsRequired()
                 .HasMaxLength(100);
+
+            entity.HasIndex(c => c.Name)
+                .IsUnique()
+                .HasDatabaseName("UX_categories_name");
         });
 
         modelBuilder.Entity<ProductCategory>(entity =>

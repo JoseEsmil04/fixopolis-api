@@ -8,7 +8,7 @@ namespace Fixopolis.WebApi.Controllers;
 [Route("api/[controller]")]
 public sealed class SeedController : ControllerBase
 {
-    [HttpPost]
+    [HttpGet]
     public async Task<IActionResult> Run(
         [FromServices] FixopolisDbContext db,
         [FromServices] IWebHostEnvironment env,
