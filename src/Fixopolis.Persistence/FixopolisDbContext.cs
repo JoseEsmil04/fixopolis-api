@@ -35,7 +35,7 @@ public class FixopolisDbContext : DbContext, IAppDbContext
                 .IsRequired()
                 .HasMaxLength(150);
 
-            entity.Property(u => u.Password)
+            entity.Property(u => u.PasswordHash)
                 .IsRequired()
                 .HasMaxLength(255);
 

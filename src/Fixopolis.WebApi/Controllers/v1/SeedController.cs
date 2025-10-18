@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 namespace Fixopolis.WebApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[ApiExplorerSettings(GroupName = "v1")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public sealed class SeedController : ControllerBase
 {
     [HttpGet]

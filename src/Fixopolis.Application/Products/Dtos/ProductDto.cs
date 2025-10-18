@@ -18,3 +18,14 @@ public sealed class CategoryItemDto
     public string Name { get; init; } = "";
 }
 
+public record UpdateProductRequest(
+    string Name,
+    string Code,
+    string? Description,
+    decimal Price,
+    int Stock,
+    bool IsAvailable,
+    List<Guid> CategoryIds
+);
+
+

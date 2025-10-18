@@ -1,6 +1,8 @@
 using Fixopolis.Application.Products.Commands;
+using Fixopolis.Application.Products.Dtos;
 using Fixopolis.Application.Products.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +10,9 @@ using Microsoft.EntityFrameworkCore;
 namespace Fixopolis.WebApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[ApiExplorerSettings(GroupName = "v1")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public sealed class ProductsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
@@ -23,6 +27,7 @@ public sealed class ProductsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin,Employee")]
     public async Task<IActionResult> Create([FromBody] CreateProductCommand createProductCommand)
     {
         try
@@ -41,23 +46,25 @@ public sealed class ProductsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProductCommand body)
+    [Authorize(Roles = "Admin,Employee")]
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateProductRequest request)
     {
         try
         {
             var command = new UpdateProductCommand(
                 id,
-                body.Name,
-                body.Code,
-                body.Description,
-                body.Price,
-                body.Stock,
-                body.IsAvailable,
-                body.CategoryIds
+                request.Name,
+                request.Code,
+                request.Description,
+                request.Price,
+                request.Stock,
+                request.IsAvailable,
+                request.CategoryIds
             );
 
             var ok = await mediator.Send(command);
             return ok ? NoContent() : NotFound();
+
         }
         catch (DbUpdateException ex) when (ex.InnerException is SqlException sql && (sql.Number == 2601 || sql.Number == 2627))
         {
@@ -72,6 +79,7 @@ public sealed class ProductsController(IMediator mediator) : ControllerBase
 
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = "Admin,Employee")]
     public async Task<IActionResult> Delete(Guid id)
     {
         var ok = await mediator.Send(new DeleteProductCommand(id));

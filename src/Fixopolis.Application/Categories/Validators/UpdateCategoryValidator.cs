@@ -18,6 +18,5 @@ public class UpdateCategoryValidator : AbstractValidator<UpdateCategoryCommand>
         }
     }
 
-    private bool BeUniqueName(string name)
-        => !_db.Categories.Any(p => p.Name == name);
+    private bool BeUniqueName(string name) => !_db.Categories.Any(p => p.Name == name);
 }

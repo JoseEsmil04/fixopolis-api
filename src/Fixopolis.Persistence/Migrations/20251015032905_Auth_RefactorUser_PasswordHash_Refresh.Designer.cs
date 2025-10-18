@@ -4,6 +4,7 @@ using Fixopolis.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fixopolis.Persistence.Migrations
 {
     [DbContext(typeof(FixopolisDbContext))]
-    partial class FixopolisDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251015032905_Auth_RefactorUser_PasswordHash_Refresh")]
+    partial class Auth_RefactorUser_PasswordHash_Refresh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

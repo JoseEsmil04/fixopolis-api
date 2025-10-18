@@ -4,11 +4,14 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Fixopolis.WebApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[ApiExplorerSettings(GroupName = "v1")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class CategoriesController(IMediator _mediator) : ControllerBase
 {
     [HttpGet]
@@ -23,6 +26,7 @@ public class CategoriesController(IMediator _mediator) : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin,Employee")]
     public async Task<ActionResult> Create([FromBody] CreateCategoryCommand command)
     {
         try
@@ -43,6 +47,7 @@ public class CategoriesController(IMediator _mediator) : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
+    [Authorize(Roles = "Admin,Employee")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateCategoryCommand body)
     {
         try
@@ -65,6 +70,7 @@ public class CategoriesController(IMediator _mediator) : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = "Admin,Employee")]
     public async Task<IActionResult> Delete(Guid id)
     {
         await _mediator.Send(new DeleteCategoryCommand(id));
