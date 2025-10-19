@@ -12,26 +12,29 @@ public sealed class GetProductByIdHandler(IAppDbContext db)
 {
     public async Task<ProductDto?> Handle(GetProductByIdQuery request, CancellationToken ct)
     {
-        return await db.Products
-            .AsNoTracking()
-            .Where(p => p.Id == request.Id)
-            .Select(p => new ProductDto
-            {
-                Id = p.Id,
-                Name = p.Name ?? "",
-                Code = p.Code ?? "",
-                Description = p.Description,
-                Price = p.Price,
-                Stock = p.Stock,
-                IsAvailable = p.IsAvailable,
-                Categories = p.ProductCategories
-                    .Select(pc => new CategoryItemDto
-                    {
-                        Id = pc.CategoryId,
-                        Name = pc.Category != null ? pc.Category.Name ?? "" : ""
-                    })
-                    .ToList()
-            })
-            .FirstOrDefaultAsync(ct);
+        try
+        {
+            var product = await db.Products
+                  .AsNoTracking()
+                  .Where(p => p.Id == request.Id)
+                  .Select(p => new ProductDto
+                  {
+                      Id = p.Id,
+                      Name = p.Name!,
+                      Code = p.Code!,
+                      CategoryName = p.Category!.Name!,
+                      Description = p.Description,
+                      Price = p.Price,
+                      Stock = p.Stock,
+                      IsAvailable = p.IsAvailable
+                  })
+                  .FirstOrDefaultAsync(ct);
+
+            return product;
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 }

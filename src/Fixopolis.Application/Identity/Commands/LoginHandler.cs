@@ -1,4 +1,5 @@
 using Fixopolis.Application.Abstractions;
+using Fixopolis.Application.Identity.Commands.RefreshToken;
 using Fixopolis.Application.Identity.Dtos;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -26,14 +27,14 @@ public sealed class LoginHandler : IRequestHandler<LoginCommand, AuthResultDto>
         string? refresh = null;
         DateTime? exp = null;
 
-        var rt = _tokens.GenerateRefreshToken(); // (Token, ExpiresAt)
+        var rt = _tokens.GenerateRefreshToken();
         refresh = rt.Token;
         exp = rt.ExpiresAt;
 
 
         if (refresh is not null)
         {
-            user.RefreshToken = refresh;
+            user.RefreshToken = RefreshTokenHandler.TokenHash(refresh);
             user.RefreshTokenExpiresAt = exp;
             await _db.SaveChangesAsync(ct);
         }

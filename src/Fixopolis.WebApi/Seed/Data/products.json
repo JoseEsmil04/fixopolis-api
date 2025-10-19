@@ -1,0 +1,37 @@
+[
+  { "Name": "Cono Reflectivo 28\"", "Code": "CON28R", "Category": "Seguridad Vial", "Description": "Cono de tráfico PVC con banda reflectiva", "Price": 850.00, "Stock": 60, "IsAvailable": true },
+  { "Name": "Barricada Plegable", "Code": "BARPLG", "Category": "Seguridad Vial", "Description": "Valla plástica con reflejante para desvíos", "Price": 3200.00, "Stock": 18, "IsAvailable": true },
+  { "Name": "Señal Pare 75 cm", "Code": "PARE75", "Category": "Seguridad Vial", "Description": "Señal metálica grado ingeniería con poste", "Price": 4200.00, "Stock": 12, "IsAvailable": true },
+
+  { "Name": "Malla Sombra 90%", "Code": "SOM90", "Category": "Soluciones Ambientales", "Description": "Rollo 2×25 m para control solar y polvo", "Price": 5400.00, "Stock": 9, "IsAvailable": true },
+  { "Name": "Geotextil No Tejido 150 g/m²", "Code": "GTX150", "Category": "Soluciones Ambientales", "Description": "Rollo 1.5×50 m para drenaje y filtración", "Price": 8700.00, "Stock": 7, "IsAvailable": true },
+  { "Name": "Tubo Drenaje Perforado 4\"", "Code": "TDP4IN", "Category": "Soluciones Ambientales", "Description": "Tubo corrugado para manejo de aguas", "Price": 2650.00, "Stock": 22, "IsAvailable": true },
+
+  { "Name": "Cemento Portland Tipo I 42.5 kg", "Code": "CEM425", "Category": "Obra Gris", "Description": "Saco de cemento para estructuras y losas", "Price": 495.00, "Stock": 240, "IsAvailable": true },
+  { "Name": "Bloque 8\" Estructural", "Code": "BLOQ8E", "Category": "Obra Gris", "Description": "Bloque de concreto alta resistencia", "Price": 75.00, "Stock": 1800, "IsAvailable": true },
+  { "Name": "Varilla 3/8\" x 9 m", "Code": "VAR38X9", "Category": "Obra Gris", "Description": "Acero corrugado grado 60", "Price": 920.00, "Stock": 150, "IsAvailable": true },
+
+  { "Name": "Yeso Tipo Pega 40 lb", "Code": "YES40", "Category": "Terminaciones", "Description": "Masilla para paneles y resanes finos", "Price": 480.00, "Stock": 95, "IsAvailable": true },
+  { "Name": "Pintura Acrílica Mate 5 gal", "Code": "PIN5GAL", "Category": "Terminaciones", "Description": "Interior/exterior, blanco base", "Price": 3950.00, "Stock": 34, "IsAvailable": true },
+  { "Name": "Cerámica 60×60 cm (caja 1.44 m²)", "Code": "CER6060", "Category": "Terminaciones", "Description": "Piso porcelanato tono neutro", "Price": 2450.00, "Stock": 58, "IsAvailable": true },
+
+  { "Name": "Puerta Metálica Externa 90 cm", "Code": "PME90", "Category": "Puertas", "Description": "Con marco y bisagras, lista para pintar", "Price": 11800.00, "Stock": 8, "IsAvailable": true },
+  { "Name": "Cerradura de Seguridad 60 mm", "Code": "CER60MM", "Category": "Puertas", "Description": "Cilindro europeo con 5 llaves", "Price": 1950.00, "Stock": 36, "IsAvailable": true },
+  { "Name": "Bisagra Acero Inox 4\" (par)", "Code": "BIS4INO", "Category": "Puertas", "Description": "Bisagra reforzada con perno", "Price": 420.00, "Stock": 120, "IsAvailable": true },
+
+  { "Name": "Tope de Cocina 1.50 m", "Code": "TOP150", "Category": "Cocinas", "Description": "Top de melamina con canto ABS", "Price": 4850.00, "Stock": 11, "IsAvailable": true },
+  { "Name": "Fregadero Acero 84×48 cm", "Code": "FRE8448", "Category": "Cocinas", "Description": "Doble tina con desagüe incluido", "Price": 5600.00, "Stock": 14, "IsAvailable": true },
+  { "Name": "Grifería Monomando Cocina", "Code": "GRIMON", "Category": "Cocinas", "Description": "Cuello alto, acabado cromado", "Price": 3200.00, "Stock": 25, "IsAvailable": true },
+
+  { "Name": "Panel de Yeso 1.22×2.44 m", "Code": "PLY122", "Category": "Interiores", "Description": "Placa drywall 1/2\" estándar", "Price": 980.00, "Stock": 70, "IsAvailable": true },
+  { "Name": "Cornisa Decorativa 2 m", "Code": "COR2M", "Category": "Interiores", "Description": "Poliestireno, lista para pintar", "Price": 360.00, "Stock": 90, "IsAvailable": true },
+  { "Name": "Vinil Autoadhesivo Madera 5 m", "Code": "VAM5M", "Category": "Interiores", "Description": "Recubrimiento decorativo para muebles y paredes", "Price": 890.00, "Stock": 33, "IsAvailable": true },
+
+  { "Name": "Sillón Reforzado de Trabajo", "Code": "SILTRB", "Category": "Muebles", "Description": "Sillón tapizado para interior", "Price": 4750.00, "Stock": 16, "IsAvailable": true },
+  { "Name": "Gabinete Baño 60 cm", "Code": "GAB60CM", "Category": "Muebles", "Description": "Mueble con espejo y lavamanos", "Price": 6850.00, "Stock": 10, "IsAvailable": true },
+  { "Name": "Estantería Metálica 5 Niveles", "Code": "EST5NV", "Category": "Muebles", "Description": "Carga por nivel 120 kg", "Price": 4750.00, "Stock": 22, "IsAvailable": true },
+
+  { "Name": "Mezcladora de Concreto 1/2 saco", "Code": "MEZ12S", "Category": "Equipos de Construcción", "Description": "Motor eléctrico 1 HP, tambor 140 L", "Price": 58900.00, "Stock": 4, "IsAvailable": true },
+  { "Name": "Compactador Tipo Rana 5.5 HP", "Code": "COM55HP", "Category": "Equipos de Construcción", "Description": "Para suelos granulares y zanjas", "Price": 112500.00, "Stock": 3, "IsAvailable": true },
+  { "Name": "Cortadora de Piso 14\"", "Code": "COR14P", "Category": "Equipos de Construcción", "Description": "Gasolina, incluye disco diamantado", "Price": 68500.00, "Stock": 5, "IsAvailable": true }
+]

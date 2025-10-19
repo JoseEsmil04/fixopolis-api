@@ -1,3 +1,4 @@
+using Fixopolis.Application.Abstractions;
 using Fixopolis.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,26 +15,27 @@ public sealed class SeedController : ControllerBase
     public async Task<IActionResult> Run(
         [FromServices] FixopolisDbContext db,
         [FromServices] IWebHostEnvironment env,
+        [FromServices] IPasswordHasher hasher,
         [FromHeader(Name = "X-Seed-Token")] string? token,
         CancellationToken ct)
     {
         if (!env.IsDevelopment())
             return Forbid();
 
-        // Token simple para evitar ejecuciones accidentales
         if (!string.Equals(token, "fixopolis-dev", StringComparison.Ordinal))
             return Unauthorized(new { message = "Seed token inválido." });
 
-        await FixopolisDbContextSeed.SeedAsync(db);
+        var contentRoot = env.ContentRootPath;
+        await FixopolisSeed.SeedAsync(db, contentRoot, hasher, ct);
         return Ok(new { message = "✅ Seed ejecutado (idempotente)." });
     }
 
     [HttpDelete]
     public async Task<IActionResult> Clear(
-    [FromServices] FixopolisDbContext db,
-    [FromServices] IWebHostEnvironment env,
-    [FromHeader(Name = "X-Seed-Token")] string? token,
-    CancellationToken ct)
+        [FromServices] FixopolisDbContext db,
+        [FromServices] IWebHostEnvironment env,
+        [FromHeader(Name = "X-Seed-Token")] string? token,
+        CancellationToken ct)
     {
         if (!env.IsDevelopment())
             return Forbid();
@@ -41,21 +43,13 @@ public sealed class SeedController : ControllerBase
         if (!string.Equals(token, "fixopolis-dev", StringComparison.Ordinal))
             return Unauthorized(new { message = "Seed token inválido." });
 
-        // Vaciar tablas en orden por relaciones (hijo → padre)
         await db.Database.BeginTransactionAsync(ct);
-
         try
         {
-            // Relaciones N–N y dependientes primero
-            await db.ProductCategories.ExecuteDeleteAsync(ct);
             await db.OrderItems.ExecuteDeleteAsync(ct);
-
-            // Tablas principales dependientes
             await db.Orders.ExecuteDeleteAsync(ct);
             await db.Products.ExecuteDeleteAsync(ct);
             await db.Categories.ExecuteDeleteAsync(ct);
-
-            // Finalmente usuarios
             await db.Users.ExecuteDeleteAsync(ct);
 
             await db.Database.CommitTransactionAsync(ct);
@@ -67,5 +61,4 @@ public sealed class SeedController : ControllerBase
             return StatusCode(500, new { message = "❌ Error al vaciar la base de datos", error = ex.Message });
         }
     }
-
 }

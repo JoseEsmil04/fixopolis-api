@@ -17,7 +17,7 @@ public sealed class UpdateProductValidator : AbstractValidator<UpdateProductComm
         .WithMessage("El código de producto ya existe.");
         RuleFor(x => x.Price).GreaterThanOrEqualTo(0);
         RuleFor(x => x.Stock).GreaterThanOrEqualTo(0);
-        RuleFor(x => x.CategoryIds).NotNull();
+        RuleFor(x => x.CategoryName).NotEmpty();
     }
 
     private bool BeUniqueCode(string code)

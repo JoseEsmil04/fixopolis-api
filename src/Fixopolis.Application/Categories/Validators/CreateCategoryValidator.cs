@@ -6,18 +6,14 @@ namespace Fixopolis.Application.Categories.Validators;
 
 public sealed class CreateCategoryValidator : AbstractValidator<CreateCategoryCommand>
 {
-    private readonly IAppDbContext _db;
-    public CreateCategoryValidator(IAppDbContext db)
+    public CreateCategoryValidator(ICategoryValidatorService categoryValidator)
     {
-        _db = db;
 
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("El nombre es obligatorio.")
-            .MaximumLength(150)
-            .Must(BeUniqueName).WithMessage("El nombre de categoría ya existe.");
+            .MaximumLength(25).WithMessage("El nombre no puede tener más de 25 caracteres.")
+            .Must(categoryValidator.BeUniqueName).WithMessage("El nombre de categoría ya existe.");
 
     }
 
-    private bool BeUniqueName(string name)
-        => !_db.Categories.Any(p => p.Name == name);
 }

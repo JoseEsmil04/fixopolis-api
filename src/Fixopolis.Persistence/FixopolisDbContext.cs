@@ -13,7 +13,6 @@ public class FixopolisDbContext : DbContext, IAppDbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
-    public DbSet<ProductCategory> ProductCategories { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
 
@@ -43,6 +42,7 @@ public class FixopolisDbContext : DbContext, IAppDbContext
             entity.HasMany(u => u.Orders)
                 .WithOne(o => o.User)
                 .HasForeignKey(o => o.UserId);
+
         });
 
         modelBuilder.Entity<Product>(entity =>
@@ -65,7 +65,11 @@ public class FixopolisDbContext : DbContext, IAppDbContext
                 .IsUnique()
                 .HasDatabaseName("UX_products_code");
 
-            // 1:N Product -> OrderItems
+            entity.HasOne(p => p.Category)
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             entity.HasMany(p => p.OrderItems)
                 .WithOne(oi => oi.Product)
                 .HasForeignKey(oi => oi.ProductId);
@@ -83,20 +87,6 @@ public class FixopolisDbContext : DbContext, IAppDbContext
             entity.HasIndex(c => c.Name)
                 .IsUnique()
                 .HasDatabaseName("UX_categories_name");
-        });
-
-        modelBuilder.Entity<ProductCategory>(entity =>
-        {
-            entity.ToTable("product_categories");
-            entity.HasKey(pc => new { pc.ProductId, pc.CategoryId });
-
-            entity.HasOne(pc => pc.Product)
-                .WithMany(p => p.ProductCategories)
-                .HasForeignKey(pc => pc.ProductId);
-
-            entity.HasOne(pc => pc.Category)
-                .WithMany(c => c.ProductCategories)
-                .HasForeignKey(pc => pc.CategoryId);
         });
 
         modelBuilder.Entity<Order>(entity =>

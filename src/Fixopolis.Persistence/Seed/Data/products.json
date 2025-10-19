@@ -1,7 +1,0 @@
-[
-  { "Name": "Hammer", "Code": "HAM-001", "Category": "Tools", "Description": "Steel hammer 16oz", "Price": 450.00, "Stock": 25, "IsAvailable": true },
-  { "Name": "Paint Roller", "Code": "PAI-002", "Category": "Paint", "Description": "Plastic handle roller", "Price": 250.00, "Stock": 50, "IsAvailable": true },
-  { "Name": "Pipe Cutter", "Code": "PLU-003", "Category": "Plumbing", "Description": "Copper pipe cutter", "Price": 800.00, "Stock": 10, "IsAvailable": true },
-  { "Name": "Extension Cord", "Code": "ELE-004", "Category": "Electrical", "Description": "10m extension cable", "Price": 600.00, "Stock": 15, "IsAvailable": true },
-  { "Name": "Garden Shovel", "Code": "GAR-005", "Category": "Gardening", "Description": "Metal garden shovel", "Price": 700.00, "Stock": 20, "IsAvailable": true }
-]

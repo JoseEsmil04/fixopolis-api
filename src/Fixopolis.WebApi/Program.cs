@@ -91,9 +91,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 
-
 // Vincular IAppDbContext a nuestro DbContext de EF
 builder.Services.AddScoped<IAppDbContext>(sp => sp.GetRequiredService<FixopolisDbContext>());
+builder.Services.AddScoped<ICategoryValidatorService, CategoryValidatorService>();
 
 // CORS
 builder.Services.AddCors(opt =>
@@ -108,13 +108,9 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fixopolis API v1"));
-
-
 app.UseCors("dev");
-
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 app.Run();

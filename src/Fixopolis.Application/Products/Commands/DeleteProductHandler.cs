@@ -9,14 +9,8 @@ public sealed class DeleteProductHandler(IAppDbContext db)
 {
     public async Task<bool> Handle(DeleteProductCommand req, CancellationToken ct)
     {
-        var product = await db.Products
-            .Include(p => p.ProductCategories)
-            .FirstOrDefaultAsync(p => p.Id == req.Id, ct);
-
+        var product = await db.Products.FirstOrDefaultAsync(p => p.Id == req.Id, ct);
         if (product is null) return false;
-
-        if (product.ProductCategories.Count > 0)
-            db.ProductCategories.RemoveRange(product.ProductCategories);
 
         db.Products.Remove(product);
         await db.SaveChangesAsync(ct);

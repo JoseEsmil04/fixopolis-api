@@ -6,8 +6,8 @@ public sealed record CreateProductCommand(
     string Name,
     string Code,
     string? Description,
+    string CategoryName,
     decimal Price,
     int Stock,
-    bool IsAvailable,
-    List<Guid> CategoryIds
+    bool IsAvailable
 ) : IRequest<Guid>;

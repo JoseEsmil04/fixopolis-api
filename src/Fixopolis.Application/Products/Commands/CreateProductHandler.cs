@@ -10,10 +10,15 @@ public sealed class CreateProductHandler(IAppDbContext db)
 {
     public async Task<Guid> Handle(CreateProductCommand req, CancellationToken ct)
     {
-        var validCategoryIds = await db.Categories
-            .Where(c => req.CategoryIds.Contains(c.Id))
-            .Select(c => c.Id)
-            .ToListAsync(ct);
+        var category = await db.Categories
+            .FirstOrDefaultAsync(c => c.Name == req.CategoryName.Trim(), ct);
+
+        if (category is null)
+            throw new InvalidOperationException($"La categoría '{req.CategoryName}' no existe.");
+
+        var codeInUse = await db.Products.AnyAsync(p => p.Code == req.Code, ct);
+        if (codeInUse)
+            throw new InvalidOperationException("El código de producto ya está en uso.");
 
         var product = new Product
         {
@@ -24,20 +29,12 @@ public sealed class CreateProductHandler(IAppDbContext db)
             Price = req.Price,
             Stock = req.Stock,
             IsAvailable = req.IsAvailable,
-            ProductCategories = validCategoryIds
-                .Select(catId => new ProductCategory
-                {
-                    ProductId = Guid.Empty,
-                    CategoryId = catId
-                })
-                .ToList()
+            CategoryId = category.Id
         };
-
-        foreach (var pc in product.ProductCategories)
-            pc.ProductId = product.Id;
 
         db.Products.Add(product);
         await db.SaveChangesAsync(ct);
         return product.Id;
     }
 }
+

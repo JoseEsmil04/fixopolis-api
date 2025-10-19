@@ -6,9 +6,9 @@ public sealed record UpdateProductCommand(
     Guid Id,
     string Name,
     string Code,
+    string? CategoryName,
     string? Description,
     decimal Price,
     int Stock,
-    bool IsAvailable,
-    List<Guid> CategoryIds
+    bool IsAvailable
 ) : IRequest<bool>;

@@ -55,11 +55,11 @@ public sealed class ProductsController(IMediator mediator) : ControllerBase
                 id,
                 request.Name,
                 request.Code,
+                request.CategoryName,
                 request.Description,
                 request.Price,
                 request.Stock,
-                request.IsAvailable,
-                request.CategoryIds
+                request.IsAvailable
             );
 
             var ok = await mediator.Send(command);

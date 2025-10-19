@@ -17,19 +17,13 @@ public sealed class GetProductsHandler(IAppDbContext db)
             .Select(p => new ProductDto
             {
                 Id = p.Id,
-                Name = p.Name ?? "",
-                Code = p.Code ?? "",
+                Name = p.Name!,
+                Code = p.Code!,
+                CategoryName = p.Category!.Name!,
                 Description = p.Description,
                 Price = p.Price,
                 Stock = p.Stock,
-                IsAvailable = p.IsAvailable,
-                Categories = p.ProductCategories
-                    .Select(pc => new CategoryItemDto
-                    {
-                        Id = pc.CategoryId,
-                        Name = pc.Category != null ? pc.Category.Name ?? "" : ""
-                    })
-                    .ToList()
+                IsAvailable = p.IsAvailable
             })
             .ToListAsync(ct);
     }

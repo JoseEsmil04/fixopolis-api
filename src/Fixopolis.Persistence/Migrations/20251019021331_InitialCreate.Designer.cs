@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fixopolis.Persistence.Migrations
 {
     [DbContext(typeof(FixopolisDbContext))]
-    [Migration("20251015032905_Auth_RefactorUser_PasswordHash_Refresh")]
-    partial class Auth_RefactorUser_PasswordHash_Refresh
+    [Migration("20251019021331_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,6 +109,9 @@ namespace Fixopolis.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -134,26 +137,13 @@ namespace Fixopolis.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.HasIndex("Code")
                         .IsUnique()
                         .HasDatabaseName("UX_products_code");
 
                     b.ToTable("products", (string)null);
-                });
-
-            modelBuilder.Entity("Fixopolis.Domain.Entities.ProductCategory", b =>
-                {
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ProductId", "CategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("product_categories", (string)null);
                 });
 
             modelBuilder.Entity("Fixopolis.Domain.Entities.User", b =>
@@ -224,28 +214,20 @@ namespace Fixopolis.Persistence.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Fixopolis.Domain.Entities.ProductCategory", b =>
+            modelBuilder.Entity("Fixopolis.Domain.Entities.Product", b =>
                 {
                     b.HasOne("Fixopolis.Domain.Entities.Category", "Category")
-                        .WithMany("ProductCategories")
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Fixopolis.Domain.Entities.Product", "Product")
-                        .WithMany("ProductCategories")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Category");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Fixopolis.Domain.Entities.Category", b =>
                 {
-                    b.Navigation("ProductCategories");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Fixopolis.Domain.Entities.Order", b =>
@@ -256,8 +238,6 @@ namespace Fixopolis.Persistence.Migrations
             modelBuilder.Entity("Fixopolis.Domain.Entities.Product", b =>
                 {
                     b.Navigation("OrderItems");
-
-                    b.Navigation("ProductCategories");
                 });
 
             modelBuilder.Entity("Fixopolis.Domain.Entities.User", b =>
