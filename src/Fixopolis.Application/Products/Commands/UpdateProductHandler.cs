@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fixopolis.Application.Products.Commands;
 
-public sealed class UpdateProductHandler(IAppDbContext db)
+public sealed class UpdateProductHandler(IAppDbContext db, IProductImageDeleter imageDeleter)
     : IRequestHandler<UpdateProductCommand, bool>
 {
     public async Task<bool> Handle(UpdateProductCommand req, CancellationToken ct)
@@ -17,6 +17,13 @@ public sealed class UpdateProductHandler(IAppDbContext db)
 
         var codeUsedByAnother = await db.Products.AnyAsync(p => p.Code == req.Code && p.Id != req.Id, ct);
         if (codeUsedByAnother) throw new InvalidOperationException("El código de producto ya está en uso.");
+
+        if (!string.IsNullOrWhiteSpace(req.ImageUrl))
+        {
+            // Delete the previous image; ignore errors if the file does not exist.
+            await imageDeleter.DeleteImageAsync(product.ImageUrl, ct);
+            product.ImageUrl = req.ImageUrl;
+        }
 
         product.Name = req.Name;
         product.Code = req.Code;

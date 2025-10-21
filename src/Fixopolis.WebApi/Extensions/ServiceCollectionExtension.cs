@@ -2,6 +2,7 @@
 using Fixopolis.Application.Abstractions;
 using Fixopolis.Infrastructure.Auth;
 using Fixopolis.Infrastructure.Security;
+using Fixopolis.WebApi.Infrastructure.Images;
 
 namespace Fixopolis.WebApi.Extensions;
 

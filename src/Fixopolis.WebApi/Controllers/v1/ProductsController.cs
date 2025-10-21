@@ -1,5 +1,4 @@
 using Fixopolis.Application.Products.Commands;
-using Fixopolis.Application.Products.Dtos;
 using Fixopolis.Application.Products.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -13,7 +12,7 @@ namespace Fixopolis.WebApi.Controllers;
 [ApiVersion("1.0")]
 [ApiExplorerSettings(GroupName = "v1")]
 [Route("api/v{version:apiVersion}/[controller]")]
-public sealed class ProductsController(IMediator mediator) : ControllerBase
+public sealed class ProductsController(IMediator mediator, IProductImageStorage imageStorage) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetAll()
@@ -28,11 +27,25 @@ public sealed class ProductsController(IMediator mediator) : ControllerBase
 
     [HttpPost]
     [Authorize(Roles = "Admin,Employee")]
-    public async Task<IActionResult> Create([FromBody] CreateProductCommand createProductCommand)
+    public async Task<IActionResult> Create([FromForm] CreateProductForm form)
     {
         try
         {
-            var id = await mediator.Send(createProductCommand);
+            var imageUrl = form.ImageFile is null
+                    ? null
+                    : await imageStorage.SaveImageAsync(form.ImageFile, HttpContext.RequestAborted);
+
+            var command = new CreateProductCommand(
+                form.Name,
+                form.Code,
+                form.Description,
+                form.CategoryName,
+                form.Price,
+                form.Stock,
+                form.IsAvailable,
+                imageUrl);
+
+            var id = await mediator.Send(command);
             return CreatedAtAction(nameof(GetById), new { id }, null);
         }
         catch (DbUpdateException ex) when (ex.InnerException is SqlException sql && (sql.Number == 2601 || sql.Number == 2627))
@@ -47,20 +60,24 @@ public sealed class ProductsController(IMediator mediator) : ControllerBase
 
     [HttpPut("{id:guid}")]
     [Authorize(Roles = "Admin,Employee")]
-    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateProductRequest request)
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromForm] UpdateProductForm form)
     {
         try
         {
+            var imageUrl = form.ImageFile is null
+                    ? null
+                    : await imageStorage.SaveImageAsync(form.ImageFile, HttpContext.RequestAborted);
+
             var command = new UpdateProductCommand(
                 id,
-                request.Name,
-                request.Code,
-                request.CategoryName,
-                request.Description,
-                request.Price,
-                request.Stock,
-                request.IsAvailable
-            );
+                form.Name,
+                form.Code,
+                form.CategoryName,
+                form.Description,
+                form.Price,
+                form.Stock,
+                form.IsAvailable,
+                imageUrl);
 
             var ok = await mediator.Send(command);
             return ok ? NoContent() : NotFound();
@@ -75,8 +92,6 @@ public sealed class ProductsController(IMediator mediator) : ControllerBase
             return Conflict(new { message = ex.Message });
         }
     }
-
-
 
     [HttpDelete("{id:guid}")]
     [Authorize(Roles = "Admin,Employee")]

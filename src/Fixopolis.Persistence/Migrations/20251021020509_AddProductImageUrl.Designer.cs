@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fixopolis.Persistence.Migrations
 {
     [DbContext(typeof(FixopolisDbContext))]
-    [Migration("20251019021331_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251021020509_AddProductImageUrl")]
+    partial class AddProductImageUrl
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -118,6 +118,9 @@ namespace Fixopolis.Persistence.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsAvailable")

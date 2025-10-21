@@ -10,5 +10,6 @@ public sealed record UpdateProductCommand(
     string? Description,
     decimal Price,
     int Stock,
-    bool IsAvailable
+    bool IsAvailable,
+    string? ImageUrl
 ) : IRequest<bool>;

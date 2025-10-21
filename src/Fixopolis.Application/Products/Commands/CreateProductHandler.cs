@@ -29,7 +29,8 @@ public sealed class CreateProductHandler(IAppDbContext db)
             Price = req.Price,
             Stock = req.Stock,
             IsAvailable = req.IsAvailable,
-            CategoryId = category.Id
+            CategoryId = category.Id,
+            ImageUrl = req.ImageUrl
         };
 
         db.Products.Add(product);

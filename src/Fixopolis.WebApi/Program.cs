@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Fixopolis.WebApi.Infrastructure.Images;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,7 +67,7 @@ builder.Services.AddVersionedApiExplorer(opt =>
 
 builder.Services.AddIdentityInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
-
+builder.Services.AddProductImageServices();
 builder.Services.AddDbContext<FixopolisDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -109,6 +110,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fixopolis API v1"));
 app.UseCors("dev");
+app.UseStaticFiles();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

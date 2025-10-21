@@ -9,5 +9,6 @@ public sealed record CreateProductCommand(
     string CategoryName,
     decimal Price,
     int Stock,
-    bool IsAvailable
+    bool IsAvailable,
+    string? ImageUrl
 ) : IRequest<Guid>;
