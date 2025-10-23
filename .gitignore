@@ -63,9 +63,8 @@ Thumbs.db
 
 # Publish output
 /publish/
-wwwroot/
 node_modules/
-
+wwwroot/
 # Sensitive
 appsettings.Development.json
 appsettings.Local.json

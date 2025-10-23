@@ -108,7 +108,8 @@ public static class FixopolisSeed
                     Price = pr.Price,
                     Stock = pr.Stock,
                     IsAvailable = pr.IsAvailable,
-                    CategoryId = catId
+                    CategoryId = catId,
+                    ImageUrl = pr.ImageUrl
                 });
             }
 

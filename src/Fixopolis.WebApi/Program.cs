@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Fixopolis.WebApi.Infrastructure.Images;
+using Supabase;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,19 @@ builder.Services.AddValidatorsFromAssemblyContaining<IAppDbContext>();
 
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(AssemblyMarker).Assembly));
+
+// Vincular IAppDbContext a nuestro DbContext de EF
+builder.Services.AddScoped<IAppDbContext>(sp => sp.GetRequiredService<FixopolisDbContext>());
+builder.Services.AddScoped<ICategoryValidatorService, CategoryValidatorService>();
+builder.Services.AddScoped(_ =>
+  new Client(
+    builder.Configuration["Supabase:Url"]!,
+    builder.Configuration["Supabase:ApiKey"],
+    new SupabaseOptions
+    {
+        AutoRefreshToken = true,
+        AutoConnectRealtime = true
+    }));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(opt =>
@@ -92,9 +106,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 
-// Vincular IAppDbContext a nuestro DbContext de EF
-builder.Services.AddScoped<IAppDbContext>(sp => sp.GetRequiredService<FixopolisDbContext>());
-builder.Services.AddScoped<ICategoryValidatorService, CategoryValidatorService>();
 
 // CORS
 builder.Services.AddCors(opt =>
