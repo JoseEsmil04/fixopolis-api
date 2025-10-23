@@ -26,7 +26,8 @@ public sealed class GetProductByIdHandler(IAppDbContext db)
                       Description = p.Description,
                       Price = p.Price,
                       Stock = p.Stock,
-                      IsAvailable = p.IsAvailable
+                      IsAvailable = p.IsAvailable,
+                      ImageUrl = p.ImageUrl
                   })
                   .FirstOrDefaultAsync(ct);
 

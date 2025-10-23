@@ -10,6 +10,7 @@ public sealed class ProductDto
     public decimal Price { get; init; }
     public int Stock { get; init; }
     public bool IsAvailable { get; init; }
+    public string? ImageUrl { get; set; }
 }
 
 public sealed record UpdateProductRequest(
