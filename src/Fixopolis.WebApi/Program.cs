@@ -84,7 +84,7 @@ builder.Services.AddApplication();
 builder.Services.AddProductImageServices();
 builder.Services.AddDbContext<FixopolisDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
