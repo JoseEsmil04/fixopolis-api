@@ -5,6 +5,9 @@ WORKDIR /src
 
 COPY Fixopolis.sln ./
 COPY src/Fixopolis.WebApi/Fixopolis.WebApi.csproj src/Fixopolis.WebApi/
+COPY src/Fixopolis.Domain/Fixopolis.Domain.csproj src/Fixopolis.Domain/
+COPY src/Fixopolis.Persistence/Fixopolis.Persistence.csproj src/Fixopolis.Persistence/
+COPY src/Fixopolis.Application/Fixopolis.Application.csproj src/Fixopolis.Application/
 
 
 RUN dotnet restore ./Fixopolis.sln
