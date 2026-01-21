@@ -49,7 +49,6 @@ LogFiles/
 
 # Docker
 docker-compose.override.yml
-**/Dockerfile
 **/bin/
 **/obj/
 **/out/
