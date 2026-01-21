@@ -1,0 +1,5 @@
+[Nombre del producto y descripción breve], mostrado en composición centrada sobre un fondo oscuro profesional con estética de la marca Fixopolis. 
+El fondo combina tonos negro mate (#111827) y gris profundo (#1E293B), con sutiles acentos de luz verde esmeralda (#0D9668) y morado (#6D28D9).
+Iluminación de estudio realista, sombras suaves, textura visible, fondo limpio sin texto ni logotipos.
+Composición centrada, estilo fotográfico profesional, calidad 8K, proporción cuadrada 1:1. 
+El archivo final debe representarse como [CódigoProducto].png

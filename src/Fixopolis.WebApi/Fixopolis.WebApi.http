@@ -1,0 +1,6 @@
+@Fixopolis.WebApi_HostAddress = http://localhost:5183
+
+# GET {{Fixopolis.WebApi_HostAddress}}/weatherforecast/
+# Accept: application/json
+
+###

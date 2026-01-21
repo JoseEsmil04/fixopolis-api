@@ -1,0 +1,6 @@
+[
+  { "Name": "Super Admin", "Email": "admin@fixopolis.com", "PasswordHash": "123456", "Role": 0, "IsActive": true },
+  { "Name": "Maria Lopez", "Email": "maria@fixopolis.com", "PasswordHash": "123456", "Role": 2, "IsActive": true },
+  { "Name": "Pedro Martinez", "Email": "pedro@fixopolis.com", "PasswordHash": "123456", "Role": 1, "IsActive": true },
+  { "Name": "Esmil 04", "Email": "joseesmil04@correo.com", "PasswordHash": "123456", "Role": 0, "IsActive": true }
+]

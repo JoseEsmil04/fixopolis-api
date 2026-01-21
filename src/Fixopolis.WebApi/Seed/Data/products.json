@@ -1,0 +1,35 @@
+[
+  { "Name": "Cono Reflectivo 28\"", "Code": "CON28R", "Category": "Seguridad Vial", "Description": "Cono de tráfico PVC con banda reflectiva", "Price": 850.00, "Stock": 60, "IsAvailable": true, "ImageUrl": "https://ogujzychknnsvxepkwkd.supabase.co/storage/v1/object/public/product-images/CON28R.webp" },
+  { "Name": "Barricada Plegable", "Code": "BARPLG", "Category": "Seguridad Vial", "Description": "Valla plástica con reflejante para desvíos", "Price": 3200.00, "Stock": 18, "IsAvailable": true, "ImageUrl": "https://ogujzychknnsvxepkwkd.supabase.co/storage/v1/object/public/product-images/BARPLG.webp" },
+
+  { "Name": "Malla Sombra 90%", "Code": "SOM90", "Category": "Soluciones Ambientales", "Description": "Rollo 2×25 m para control solar y polvo", "Price": 5400.00, "Stock": 9, "IsAvailable": true, "ImageUrl": "https://ogujzychknnsvxepkwkd.supabase.co/storage/v1/object/public/product-images/SOM90.webp" },
+  { "Name": "Geotextil No Tejido 150 g/m²", "Code": "GTX150", "Category": "Soluciones Ambientales", "Description": "Rollo 1.5×50 m para drenaje y filtración", "Price": 8700.00, "Stock": 7, "IsAvailable": true, "ImageUrl": "https://ogujzychknnsvxepkwkd.supabase.co/storage/v1/object/public/product-images/GTX150.webp" },
+
+  { "Name": "Cemento Portland Tipo I 42.5 kg", "Code": "CEM425", "Category": "Obra Gris", "Description": "Saco de cemento para estructuras y losas", "Price": 495.00, "Stock": 240, "IsAvailable": true, "ImageUrl": "https://ogujzychknnsvxepkwkd.supabase.co/storage/v1/object/public/product-images/CEM425.webp" },
+  { "Name": "Block 8\" Estructural", "Code": "BLOC8E", "Category": "Obra Gris", "Description": "Bloque de concreto alta resistencia", "Price": 75.00, "Stock": 1800, "IsAvailable": true, "ImageUrl": "https://ogujzychknnsvxepkwkd.supabase.co/storage/v1/object/public/product-images/BLOC8E.webp" },
+
+  { "Name": "Yeso Tipo Pega 40 lb", "Code": "YES40", "Category": "Terminaciones", "Description": "Masilla para paneles y resanes finos", "Price": 480.00, "Stock": 95, "IsAvailable": true, "ImageUrl": "https://ogujzychknnsvxepkwkd.supabase.co/storage/v1/object/public/product-images/YES40.webp" },
+  { "Name": "Pintura Acrílica Mate 5 gal", "Code": "PIN5GAL", "Category": "Terminaciones", "Description": "Interior/exterior, blanco base", "Price": 3950.00, "Stock": 34, "IsAvailable": true, "ImageUrl": "https://ogujzychknnsvxepkwkd.supabase.co/storage/v1/object/public/product-images/PIN5GAL.webp" },
+
+  { "Name": "Puerta Metálica Externa 90 cm", "Code": "PME90", "Category": "Puertas", "Description": "Con marco y bisagras, lista para pintar", "Price": 11800.00, "Stock": 8, "IsAvailable": true, "ImageUrl": "https://ogujzychknnsvxepkwkd.supabase.co/storage/v1/object/public/product-images/PME90.webp" },
+  { "Name": "Cerradura de Seguridad 60 mm", "Code": "CER60MM", "Category": "Puertas", "Description": "Cilindro europeo con 5 llaves", "Price": 1950.00, "Stock": 36, "IsAvailable": true, "ImageUrl": "https://ogujzychknnsvxepkwkd.supabase.co/storage/v1/object/public/product-images/CER60MM.webp" },
+
+  { "Name": "Tope de Cocina 1.50 m", "Code": "TOP150", "Category": "Cocinas", "Description": "Top de melamina con canto ABS", "Price": 4850.00, "Stock": 11, "IsAvailable": true, "ImageUrl": "https://ogujzychknnsvxepkwkd.supabase.co/storage/v1/object/public/product-images/TOP150.webp" },
+  { "Name": "Fregadero Acero 84×48 cm", "Code": "FRE8448", "Category": "Cocinas", "Description": "Doble tina con desagüe incluido", "Price": 5600.00, "Stock": 14, "IsAvailable": true, "ImageUrl": "https://ogujzychknnsvxepkwkd.supabase.co/storage/v1/object/public/product-images/FRE8448.webp" },
+
+  { "Name": "Panel de Yeso 1.22×2.44 m", "Code": "PLY122", "Category": "Interiores", "Description": "Placa drywall 1/2\" estándar", "Price": 980.00, "Stock": 70, "IsAvailable": true, "ImageUrl": "https://ogujzychknnsvxepkwkd.supabase.co/storage/v1/object/public/product-images/PLY122.webp" },
+  { "Name": "Cornisa Decorativa 2 m", "Code": "COR2M", "Category": "Interiores", "Description": "Poliestireno, lista para pintar", "Price": 360.00, "Stock": 90, "IsAvailable": true, "ImageUrl": "https://ogujzychknnsvxepkwkd.supabase.co/storage/v1/object/public/product-images/COR2M.webp" },
+
+  { "Name": "Sillón Reforzado de Trabajo", "Code": "SILTRB", "Category": "Muebles", "Description": "Sillón tapizado para interior", "Price": 4750.00, "Stock": 16, "IsAvailable": true, "ImageUrl": "https://ogujzychknnsvxepkwkd.supabase.co/storage/v1/object/public/product-images/SILTRB.webp" },
+  { "Name": "Gabinete Baño 60 cm", "Code": "GAB60CM", "Category": "Muebles", "Description": "Mueble con espejo y lavamanos", "Price": 6850.00, "Stock": 10, "IsAvailable": true, "ImageUrl": "https://ogujzychknnsvxepkwkd.supabase.co/storage/v1/object/public/product-images/GAB60CM.webp" },
+
+  { "Name": "Mezcladora de Concreto 1/2 saco", "Code": "MEZ12S", "Category": "Equipos de Construcción", "Description": "Motor eléctrico 1 HP, tambor 140 L", "Price": 58900.00, "Stock": 4, "IsAvailable": true, "ImageUrl": "https://ogujzychknnsvxepkwkd.supabase.co/storage/v1/object/public/product-images/MEZ12S.webp" },
+  { "Name": "Compactador Tipo Rana 5.5 HP", "Code": "COM55HP", "Category": "Equipos de Construcción", "Description": "Para suelos granulares y zanjas", "Price": 112500.00, "Stock": 3, "IsAvailable": true, "ImageUrl": "https://ogujzychknnsvxepkwkd.supabase.co/storage/v1/object/public/product-images/COM55HP.webp" }
+]
+
+
+
+
+
+
+

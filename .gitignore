@@ -1,0 +1,76 @@
+# ======== .NET Core / Visual Studio ======== #
+[Bb]in/
+[Oo]bj/
+out/
+launchSettings.json
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+*.dll
+*.exe
+*.app
+*.appx
+*.log
+*.vspscc
+*.vssscc
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Temporary
+*.tmp
+*.temp
+*.bak
+*.old
+*.cache
+*.zip
+*.tar.gz
+
+# Logs
+*.log
+logs/
+LogFiles/
+
+# Rider / VSCode / JetBrains
+.vs/
+.idea/
+.vscode/
+
+# Docker
+docker-compose.override.yml
+**/Dockerfile
+**/bin/
+**/obj/
+**/out/
+
+# EF Core Migrations backup files
+*MigrationsBackup*
+
+# System
+.DS_Store
+Thumbs.db
+
+# Publish output
+/publish/
+node_modules/
+wwwroot/
+# Sensitive
+appsettings.Development.json
+appsettings.Local.json
+.env
+*.pfx
+
+# Backups
+*.bak
+*.swp
