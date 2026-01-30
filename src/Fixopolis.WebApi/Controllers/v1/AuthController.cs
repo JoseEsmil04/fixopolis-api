@@ -1,8 +1,10 @@
 using System.Security.Claims;
+using Fixopolis.Application.Abstractions;
 using Fixopolis.Application.Identity.Commands;
 using Fixopolis.Application.Identity.Commands.Login;
-using Fixopolis.Application.Identity.Commands.RefreshToken;
+using Fixopolis.Application.Identity.Dtos;
 using Fixopolis.Application.Identity.Queries.Me;
+using Fixopolis.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -54,19 +56,7 @@ public class AuthController : ControllerBase
         }
     }
 
-    [HttpPost("refresh")]
-    [AllowAnonymous]
-    public async Task<IActionResult> Refresh([FromBody] RefreshTokenCommand cmd, CancellationToken ct)
-    {
-        try
-        {
-            return Ok(await _mediator.Send(cmd, ct));
-        }
-        catch (UnauthorizedAccessException)
-        {
-            return Unauthorized(new { message = "Invalid or expired refresh token." });
-        }
-    }
+
 
     [HttpGet("me")]
     [Authorize]
@@ -83,6 +73,46 @@ public class AuthController : ControllerBase
         catch (Exception ex)
         {
             return StatusCode(500, new { message = "An error occurred while retrieving token info.", detail = ex.Message });
+        }
+    }
+
+    [HttpPost("checkstatus")]
+    [Authorize]
+    public async Task<IActionResult> CheckStatus([FromBody] UserDto user, CancellationToken ct)
+    {
+        try
+        {
+            var userIdClaim = User.FindFirst("sub")?.Value ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || userIdClaim != user.Id.ToString())
+                return Unauthorized(new { message = "Invalid token or user mismatch." });
+
+            var meQuery = new MeQuery(Guid.Parse(userIdClaim));
+            var currentUser = await _mediator.Send(meQuery, ct);
+
+            if (currentUser == null || !currentUser.IsActive)
+                return Unauthorized(new { message = "User not found or inactive." });
+
+            // Generate new token
+            var userEntity = new User
+            {
+                Id = currentUser.Id,
+                Name = currentUser.Name,
+                Email = currentUser.Email,
+                Role = currentUser.Role,
+                IsActive = currentUser.IsActive
+            };
+
+            var tokenService = HttpContext.RequestServices.GetService<ITokenService>();
+            var token = tokenService?.GenerateAccessToken(userEntity);
+
+            if (string.IsNullOrEmpty(token))
+                return StatusCode(500, new { message = "Failed to generate token." });
+
+            return Ok(new { token, user = currentUser });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred during status check.", detail = ex.Message });
         }
     }
 
