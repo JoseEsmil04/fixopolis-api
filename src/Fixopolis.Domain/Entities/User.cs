@@ -10,7 +10,5 @@ public class User : BaseEntity
     public string? PasswordHash { get; set; }
     public UserRole Role { get; set; }
     public bool IsActive { get; set; }
-    public string? RefreshToken { get; set; }
-    public DateTime? RefreshTokenExpiresAt { get; set; }
     public List<Order>? Orders { get; set; }
 }

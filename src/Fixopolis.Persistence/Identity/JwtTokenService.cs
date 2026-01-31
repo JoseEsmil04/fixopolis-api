@@ -1,10 +1,8 @@
-// src/Fixopolis.Infrastructure/Auth/JwtTokenService.cs
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 using Fixopolis.Application.Abstractions;
-using Fixopolis.Domain.Entities; // User
+using Fixopolis.Domain.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -29,7 +27,7 @@ public class JwtTokenService : ITokenService
         new(JwtRegisteredClaimNames.Email, user.Email ?? string.Empty),
         new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
 
-        // 👇 Convertimos el enum UserRole a string ("Admin", "Employee" o "Customer")
+
         new(ClaimTypes.Role, user.Role.ToString())
     };
 
@@ -45,13 +43,5 @@ public class JwtTokenService : ITokenService
         );
 
         return new JwtSecurityTokenHandler().WriteToken(token);
-    }
-
-    public (string Token, DateTime ExpiresAt) GenerateRefreshToken()
-    {
-        var bytes = RandomNumberGenerator.GetBytes(64);
-        var token = Convert.ToBase64String(bytes);
-        var exp = DateTime.UtcNow.AddDays(_opt.RefreshTokenDays);
-        return (token, exp);
     }
 }
