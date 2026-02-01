@@ -2,7 +2,6 @@ using System.Security.Claims;
 using Fixopolis.Application.Abstractions;
 using Fixopolis.Application.Identity.Commands;
 using Fixopolis.Application.Identity.Commands.Login;
-using Fixopolis.Application.Identity.Dtos;
 using Fixopolis.Application.Identity.Queries.Me;
 using Fixopolis.Domain.Entities;
 using MediatR;
@@ -76,15 +75,15 @@ public class AuthController : ControllerBase
         }
     }
 
-    [HttpPost("checkstatus")]
+    [HttpGet("checkstatus")]
     [Authorize]
-    public async Task<IActionResult> CheckStatus([FromBody] UserDto user, CancellationToken ct)
+    public async Task<IActionResult> CheckStatus(CancellationToken ct)
     {
         try
         {
             var userIdClaim = User.FindFirst("sub")?.Value ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userIdClaim == null || userIdClaim != user.Id.ToString())
-                return Unauthorized(new { message = "Invalid token or user mismatch." });
+            if (userIdClaim == null)
+                return Unauthorized(new { message = "Invalid token." });
 
             var meQuery = new MeQuery(Guid.Parse(userIdClaim));
             var currentUser = await _mediator.Send(meQuery, ct);
@@ -116,8 +115,7 @@ public class AuthController : ControllerBase
         }
     }
 
-    // Logout: stateless → el cliente debe borrar el token.
     [HttpPost("logout")]
     [Authorize]
-    public IActionResult Logout() => Ok(new { message = "Logged out. Client must discard tokens." });
+    public IActionResult Logout() => Ok();
 }
