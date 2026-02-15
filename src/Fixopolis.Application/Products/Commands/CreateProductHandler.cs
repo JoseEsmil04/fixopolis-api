@@ -11,7 +11,7 @@ public sealed class CreateProductHandler(IAppDbContext db)
     public async Task<Guid> Handle(CreateProductCommand req, CancellationToken ct)
     {
         var category = await db.Categories
-            .FirstOrDefaultAsync(c => c.Name == req.CategoryName.Trim(), ct);
+            .FirstOrDefaultAsync(c => c.Name!.ToLower() == req.CategoryName.Trim().ToLower(), ct);
 
         if (category is null)
             throw new InvalidOperationException($"La categoría '{req.CategoryName}' no existe.");

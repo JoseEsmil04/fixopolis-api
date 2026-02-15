@@ -12,7 +12,7 @@ public sealed class UpdateProductHandler(IAppDbContext db, IProductImageDeleter 
         var product = await db.Products.FirstOrDefaultAsync(p => p.Id == req.Id, ct);
         if (product is null) return false;
 
-        var category = await db.Categories.FirstOrDefaultAsync(c => c.Name == req.CategoryName!.Trim(), ct);
+        var category = await db.Categories.FirstOrDefaultAsync(c => c.Name!.ToLower() == req.CategoryName!.Trim().ToLower(), ct);
         if (category is null) throw new InvalidOperationException("La categoría indicada no existe.");
 
         var codeUsedByAnother = await db.Products.AnyAsync(p => p.Code == req.Code && p.Id != req.Id, ct);
