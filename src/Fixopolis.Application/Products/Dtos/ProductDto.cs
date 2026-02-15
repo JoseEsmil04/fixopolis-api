@@ -20,6 +20,7 @@ public sealed class ProductDto
     public Guid Id { get; init; }
     public string Name { get; init; } = "";
     public string Code { get; init; } = "";
+    public Guid CategoryId { get; init; }
     public string? CategoryName { get; init; } = "";
     public string? Description { get; init; }
     public decimal Price { get; init; }
@@ -38,7 +39,3 @@ public sealed record UpdateProductRequest(
     Guid? CategoryId,
     string? CategoryName
 );
-
-
-
-

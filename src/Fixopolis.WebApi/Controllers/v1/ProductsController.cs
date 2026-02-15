@@ -1,6 +1,7 @@
 using Fixopolis.Application.Products.Commands;
 using Fixopolis.Application.Products.Queries;
 using Fixopolis.Application.Products.Dtos;
+using Fixopolis.Application.Products.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -46,22 +47,27 @@ public sealed class ProductsController(IMediator mediator, IProductImageStorage 
                 form.Name,
                 form.Code,
                 form.Description,
-                form.CategoryName,
+                form.CategoryId,
                 form.Price,
                 form.Stock,
                 form.IsAvailable,
-                imageUrl);
+                imageUrl,
+                form.CategoryName);
 
             var id = await mediator.Send(command);
             return CreatedAtAction(nameof(GetById), new { id }, null);
         }
-        catch (DbUpdateException ex) when (ex.InnerException is SqlException sql && (sql.Number == 2601 || sql.Number == 2627))
+        catch (CategoryNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (ProductCodeAlreadyExistsException)
         {
             return Conflict(new { message = "El código de producto ya está en uso." });
         }
-        catch (InvalidOperationException ex)
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sql && (sql.Number == 2601 || sql.Number == 2627))
         {
-            return Conflict(new { message = ex.Message });
+            return Conflict(new { message = "El código de producto ya está en uso." });
         }
     }
 
@@ -79,24 +85,29 @@ public sealed class ProductsController(IMediator mediator, IProductImageStorage 
                 id,
                 form.Name,
                 form.Code,
-                form.CategoryName,
+                form.CategoryId,
                 form.Description,
                 form.Price,
                 form.Stock,
                 form.IsAvailable,
-                imageUrl);
+                imageUrl,
+                form.CategoryName);
 
             var ok = await mediator.Send(command);
             return ok ? NoContent() : NotFound();
 
         }
-        catch (DbUpdateException ex) when (ex.InnerException is SqlException sql && (sql.Number == 2601 || sql.Number == 2627))
+        catch (CategoryNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (ProductCodeAlreadyExistsException)
         {
             return Conflict(new { message = "El código de producto ya está en uso." });
         }
-        catch (InvalidOperationException ex)
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sql && (sql.Number == 2601 || sql.Number == 2627))
         {
-            return Conflict(new { message = ex.Message });
+            return Conflict(new { message = "El código de producto ya está en uso." });
         }
     }
 

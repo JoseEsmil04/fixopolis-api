@@ -6,10 +6,11 @@ public sealed record UpdateProductCommand(
     Guid Id,
     string Name,
     string Code,
-    string? CategoryName,
+    Guid CategoryId,
     string? Description,
     decimal Price,
     int Stock,
     bool IsAvailable,
-    string? ImageUrl
+    string? ImageUrl,
+    string? CategoryName = null
 ) : IRequest<bool>;

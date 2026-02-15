@@ -19,6 +19,7 @@ public sealed class GetProductsHandler(IAppDbContext db)
                 Id = p.Id,
                 Name = p.Name!,
                 Code = p.Code!,
+                CategoryId = p.CategoryId,
                 CategoryName = p.Category!.Name!,
                 Description = p.Description,
                 Price = p.Price,

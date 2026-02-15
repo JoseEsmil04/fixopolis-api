@@ -1,4 +1,5 @@
 using Fixopolis.Application.Abstractions;
+using Fixopolis.Application.Products.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,22 +13,23 @@ public sealed class UpdateProductHandler(IAppDbContext db, IProductImageDeleter 
         var product = await db.Products.FirstOrDefaultAsync(p => p.Id == req.Id, ct);
         if (product is null) return false;
 
-        var category = await db.Categories.FirstOrDefaultAsync(c => c.Name!.ToLower() == req.CategoryName!.Trim().ToLower(), ct);
-        if (category is null) throw new InvalidOperationException("La categoría indicada no existe.");
+        var categoryExists = await db.Categories.AnyAsync(c => c.Id == req.CategoryId, ct);
+        if (!categoryExists)
+            throw new CategoryNotFoundException(req.CategoryId);
 
         var codeUsedByAnother = await db.Products.AnyAsync(p => p.Code == req.Code && p.Id != req.Id, ct);
-        if (codeUsedByAnother) throw new InvalidOperationException("El código de producto ya está en uso.");
+        if (codeUsedByAnother)
+            throw new ProductCodeAlreadyExistsException(req.Code);
 
         if (!string.IsNullOrWhiteSpace(req.ImageUrl))
         {
-            // Delete the previous image; ignore errors if the file does not exist.
             await imageDeleter.DeleteImageAsync(product.ImageUrl, ct);
             product.ImageUrl = req.ImageUrl;
         }
 
         product.Name = req.Name;
         product.Code = req.Code;
-        product.CategoryId = category.Id;
+        product.CategoryId = req.CategoryId;
         product.Description = req.Description;
         product.Price = req.Price;
         product.Stock = req.Stock;

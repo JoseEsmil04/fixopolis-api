@@ -1,4 +1,5 @@
 using Fixopolis.Application.Abstractions;
+using Fixopolis.Application.Products.Exceptions;
 using Fixopolis.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -10,15 +11,13 @@ public sealed class CreateProductHandler(IAppDbContext db)
 {
     public async Task<Guid> Handle(CreateProductCommand req, CancellationToken ct)
     {
-        var category = await db.Categories
-            .FirstOrDefaultAsync(c => c.Name!.ToLower() == req.CategoryName.Trim().ToLower(), ct);
-
-        if (category is null)
-            throw new InvalidOperationException($"La categoría '{req.CategoryName}' no existe.");
+        var categoryExists = await db.Categories.AnyAsync(c => c.Id == req.CategoryId, ct);
+        if (!categoryExists)
+            throw new CategoryNotFoundException(req.CategoryId);
 
         var codeInUse = await db.Products.AnyAsync(p => p.Code == req.Code, ct);
         if (codeInUse)
-            throw new InvalidOperationException("El código de producto ya está en uso.");
+            throw new ProductCodeAlreadyExistsException(req.Code);
 
         var product = new Product
         {
@@ -29,7 +28,7 @@ public sealed class CreateProductHandler(IAppDbContext db)
             Price = req.Price,
             Stock = req.Stock,
             IsAvailable = req.IsAvailable,
-            CategoryId = category.Id,
+            CategoryId = req.CategoryId,
             ImageUrl = req.ImageUrl
         };
 
@@ -38,4 +37,3 @@ public sealed class CreateProductHandler(IAppDbContext db)
         return product.Id;
     }
 }
-
