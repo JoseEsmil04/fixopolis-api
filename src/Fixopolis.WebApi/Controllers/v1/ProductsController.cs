@@ -2,6 +2,7 @@ using Fixopolis.Application.Products.Commands;
 using Fixopolis.Application.Products.Queries;
 using Fixopolis.Application.Products.Dtos;
 using Fixopolis.Application.Products.Exceptions;
+using Fixopolis.WebApi.Seed.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,9 +40,18 @@ public sealed class ProductsController(IMediator mediator, IProductImageStorage 
     {
         try
         {
-            var imageUrl = form.ImageFile is null
-                    ? null
-                    : await imageStorage.SaveImageAsync(form.ImageFile, HttpContext.RequestAborted);
+            string? imageUrl = null;
+            
+            // Si viene archivo, subir a Supabase
+            if (form.ImageFile is not null)
+            {
+                imageUrl = await imageStorage.SaveImageAsync(form.ImageFile, HttpContext.RequestAborted);
+            }
+            // Si viene URL manual (supabase u otro), usarla directamente
+            else if (!string.IsNullOrWhiteSpace(form.ImageUrl))
+            {
+                imageUrl = form.ImageUrl;
+            }
 
             var command = new CreateProductCommand(
                 form.Name,
@@ -77,9 +87,18 @@ public sealed class ProductsController(IMediator mediator, IProductImageStorage 
     {
         try
         {
-            var imageUrl = form.ImageFile is null
-                    ? null
-                    : await imageStorage.SaveImageAsync(form.ImageFile, HttpContext.RequestAborted);
+            string? imageUrl = null;
+            
+            // Si viene archivo nuevo, subir a Supabase
+            if (form.ImageFile is not null)
+            {
+                imageUrl = await imageStorage.SaveImageAsync(form.ImageFile, HttpContext.RequestAborted);
+            }
+            // Si viene URL manual, usarla
+            else if (!string.IsNullOrWhiteSpace(form.ImageUrl))
+            {
+                imageUrl = form.ImageUrl;
+            }
 
             var command = new UpdateProductCommand(
                 id,
@@ -95,7 +114,6 @@ public sealed class ProductsController(IMediator mediator, IProductImageStorage 
 
             var ok = await mediator.Send(command);
             return ok ? NoContent() : NotFound();
-
         }
         catch (CategoryNotFoundException ex)
         {
